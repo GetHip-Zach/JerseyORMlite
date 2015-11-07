@@ -24,22 +24,21 @@ public class EmployeeResource {
     @GET 
     // The Java method will produce content identified by the MIME Media
     // type "text/plain"
-    @Produces("text/html")
-    public String getIt(@QueryParam("empno") String empno) {
+    @Produces("application/json")
+    public Employee getIt(@QueryParam("empno") String empno) {
     	Employee emp = null;
     	try {
 			emp = getDao().queryForId(empno);
 			if(emp == null){
-				return "No employee found with that id";
+				// throw error message
 			}else{
-				return "<h1>" + emp.getFirstName() + " " + emp.getLastName() + "</h1>";
+				return emp;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "Error finding employee";
+			// throw error message
 		}
-
+    	return emp;
         
     }
     
